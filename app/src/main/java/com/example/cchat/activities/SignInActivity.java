@@ -12,10 +12,11 @@ import android.os.Bundle;
 
 import com.example.cchat.R;
 import com.example.cchat.databinding.ActivitySignInBinding;
+import com.example.cchat.util.StringUtils;
 
 import static android.app.ProgressDialog.show;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends BaseActivity {
 
     private ActivitySignInBinding binding;
     private EditText inputEmail;
@@ -42,12 +43,14 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void login(String email,String pwd) {
-        if (email == null || email.length() <= 0){
-            Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
+        if (StringUtils.isEmpty(email)){
+//            Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
+            showToast("please input email");
             return;
         }
-        if (pwd == null || pwd.length() <= 0) {
-            Toast.makeText(this,"请输入密码", Toast.LENGTH_SHORT).show();
+        if (StringUtils.isEmpty(pwd)) {
+//            Toast.makeText(this,"请输入密码", Toast.LENGTH_SHORT).show();
+            showToast("please input password");
             return;
         }
 
@@ -55,7 +58,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void setListeners(){
         binding.textCreateNewAccount.setOnClickListener(v ->
-                startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
+                navigateTo(SignUpActivity.class));
 
     }
 }

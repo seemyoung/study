@@ -1,5 +1,6 @@
 package com.example.cchat.activities;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,10 @@ import com.example.cchat.R;
 import com.example.cchat.api.Api;
 import com.example.cchat.api.TitlCallback;
 import com.example.cchat.databinding.ActivitySignInBinding;
+import com.example.cchat.entity.LoginResponse;
 import com.example.cchat.util.AppConfig;
 import com.example.cchat.util.StringUtils;
+import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONObject;
 
@@ -71,14 +74,25 @@ public class SignInActivity extends BaseActivity {
         Api.config("/app/login", params).postRequest(new TitlCallback(){
 
             @Override
-            public void onSuccess(String res) {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showToast(res);
-                    }
-                });
+            public void onSuccess(final String res) {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        showToast(res);
+//                    }
+//                });
+                Log.e("onSuccess", res);
+                showToastSync(res);
+                Gson gson = new Gson();
+                LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+                if (loginResponse.getCode() == 0) {
+                    String token = loginResponse.getToken();
+                    saveStringToSp("token", token);
+                    showToastSync("log in success");
+                }else{
+                    showToastSync("log in failed");
+                }
+//                res为json串
             }
 
             @Override

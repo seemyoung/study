@@ -9,14 +9,21 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     public Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        setContentView(initLayout());
+        initView();
+        initData();
     }
+
+    protected abstract int initLayout();
+    protected abstract void initView();
+    protected abstract void initData();
 
     public void showToast(String msg) {
 

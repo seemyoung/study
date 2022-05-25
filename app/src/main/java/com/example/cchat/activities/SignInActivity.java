@@ -19,6 +19,7 @@ import com.example.cchat.databinding.ActivitySignInBinding;
 import com.example.cchat.entity.LoginResponse;
 import com.example.cchat.util.AppConfig;
 import com.example.cchat.util.StringUtils;
+import com.google.android.ads.mediationtestsuite.activities.HomeActivity;
 import com.google.gson.Gson;
 import okhttp3.*;
 import org.json.JSONObject;
@@ -37,14 +38,13 @@ public class SignInActivity extends BaseActivity {
     private Button signInButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivitySignInBinding.inflate(getLayoutInflater());
+    protected int initLayout() {
+        return R.layout.activity_sign_in;
+    }
+
+    @Override
+    protected void initView() {
         setContentView(binding.getRoot());
-        setListeners();
-        inputEmail = findViewById(R.id.inputEmail);
-        inputPassword = findViewById(R.id.inputPassword);
-        signInButton = findViewById(R.id.buttonSignin);
         signInButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -53,6 +53,16 @@ public class SignInActivity extends BaseActivity {
                 login(email, pwd);
             }
         });
+        setListeners();
+
+    }
+
+    @Override
+    protected void initData() {
+        binding = ActivitySignInBinding.inflate(getLayoutInflater());
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
+        signInButton = findViewById(R.id.buttonSignin);
     }
 
     private void login(String email,String pwd){
@@ -88,6 +98,7 @@ public class SignInActivity extends BaseActivity {
                 if (loginResponse.getCode() == 0) {
                     String token = loginResponse.getToken();
                     saveStringToSp("token", token);
+                    navigateTo(HomeActivity.class);
                     showToastSync("log in success");
                 }else{
                     showToastSync("log in failed");
@@ -98,7 +109,7 @@ public class SignInActivity extends BaseActivity {
             @Override
             public void onFailure(Exception e) {
 
-
+                navigateTo(HomeActivity.class);
             }
         });
     }

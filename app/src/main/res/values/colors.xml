@@ -8,4 +8,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="error">#b00020</color>
     <color name="received_message_background">#090d16</color>
+    <color name="black">#000000</color>
 </resources>

@@ -43,7 +43,11 @@
             android:hint="@string/email"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
+<<<<<<< HEAD
             android:inputType="text"
+=======
+            android:inputType="number"
+>>>>>>> cchat
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/primary_text"
